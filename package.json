@@ -1,0 +1,13 @@
+{
+    "name": "CRUD-expressjs-mongoose",
+    "version": "1.0.0", 
+    "description": "We can create people and they can be characterized as Students or Professors.
+    It uses some verbs for HTTP (GET, PUT, POST and DELETE) to manage the database.",
+    "author":"Jerónimo Alzate Duque" ,
+    "main": "server.js",
+    "dependencies": {
+        "express": "~4.0.0", //Node framework
+        "mongoose": "~3.6.13", //ORM to communicate with our MongoDB
+        "body-parser": "~1.0.1", //Let us POST content from our HTTP request.
+        }
+}
