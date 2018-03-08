@@ -5,18 +5,13 @@ var schema = require('./schema.js');
 var mod = models.getPeople(); //gets it from model
 
 
-function save(req, res) { //función para guardar un usuario
+function save(req, res) { //POST
     var person = new mod({person_id : req.body.person_id, person_name: req.body.person_name, type_person: req.body.type_person});
   
     person.save(function() {
       res.send("Guardamos tus datos");
     });
   };
-
-
-
-
-
 
 function getAll(req, res){ // función para obtener todos los usuarios
 	User.find(function(err, doc) {

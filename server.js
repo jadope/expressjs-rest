@@ -8,15 +8,9 @@ app.use(bodyParser.urlencoded({ extended: true })); //this will let us get the i
 app.use(bodyParser.json());
 
 var port = process.env.PORT || 420; // set our port
-
-var router = express.Router(); // get an instance of the express Router
-
-router.get('/', function(req, res) {
-    res.json({ message: 'hooray! welcome to our api!' });   
-});
-
-
-
-
+var router = express.Router();
+app.get('/', (req, res) => res.send ('Ingeniería web'))
+app.post('/', (req, res) => res.send('Ingenieria Web'))
+app.get('/jeronimo', (req, res) => res.send('Hola Ingenieria Web'))
 app.listen(port); //Start the sv.
-console.log('Magic happens on port ' + port);
+console.log('Magic happens inside the door number ' + port);
