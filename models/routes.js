@@ -1,13 +1,12 @@
 var express = require('express');
 var router = express.Router(); // express module for route managing.
-//var fs = require("fs");  //filesystem
 
 
 router.get('/', function(req, res) {
     res.json({ message: 'hooray! welcome to our api!' });   
 });
 
-var db = require('./queries.js'); 
+var db = require('./queries'); 
 
 
 
