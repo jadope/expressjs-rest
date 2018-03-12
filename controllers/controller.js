@@ -35,7 +35,7 @@ function updatePerson(req, res){
   })*/
   console.log("Before findOneAndUpdate");
   
-  persona.findOne({email: req.body.email}, function (err, personUpdated){
+  persona.findOne(req.body.email, function (err, personUpdated){
     if (err) res.status(500).send({message: `Error creating the user: ${err}`});
    // else{
      personUpdated.name = req.body.nameF;
