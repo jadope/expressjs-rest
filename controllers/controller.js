@@ -10,7 +10,12 @@ function getAll(req, res) {  //Gets all the people from DB
 
 function getSomeone(req, res) { //gets anyone on the DB by the email.
 
-  persona.find({ email: req.body.emailF }, (err, people) => {
+  persona.find({ email: req.param.emailF }, (err, people) => {
+    console.log(`estamos tratando de imprimir y ${people}`);
+    console.log(req.param.emailF);
+    console.log(req.header.emailF);
+
+    
     res.status(200).send(people)
   })
 }
@@ -185,7 +190,7 @@ function updateTeacher(req, res) {
 }
 
 
-function deleteStudent(req, res) {
+function deleteTeacher(req, res) {
 
   persona.findOne({ email: req.body.emailF }, (err, restored) => { //Update by the parameter email. - Should've been done with findOneAndUpdate but couldn't deal with it.  
     if (err) res.status(500).send({ message: `Error updating the person: ${err}` });
