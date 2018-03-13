@@ -1,23 +1,24 @@
-//This is for the database
-
 var persona = require('../models/schema');
-//var schema = require('./schema.js');
-//var mod = models.getPeople(); //gets it from model
 
 
-function getAllStudent(req, res) {
-    persona.find({}, function(err, people){ //{identifier: 'alumno'}
-        res.status(200).send(people)  
-    })
+function getAll(req, res) {  //Gets all the people from DB
+
+  persona.find({}, (err, people) => { 
+      res.status(200).send(people)  
+  })
 }
 
 function savePerson(req, res) {
+
     var person = new persona ({ //F at the end, means that it's gotten from Form.
         name: req.body.nameF,
         email: req.body.emailF,
-        /*age: req.body.ageF,
-        cellphone: req.body.cellphoneF,*/ 
-        identifier: req.body.identifierF
+        age: req.body.ageF,
+        cellphone: req.body.cellphoneF,
+        country: req.body.countryF,
+        address: req.body.addressF,
+        gender: req.body.genderF,
+        identifier: req.body.identifierF //Means if it's student / teacher. Otherwise will be a Person.
     })
     console.log(req.body);
     person.save((err) => {
@@ -27,25 +28,36 @@ function savePerson(req, res) {
 }
 
 function updatePerson(req, res){
- // if (req.body.)
-  /*var person = new persona ({
-    name: req.body.nameF,
-    identifier: req.body.identifierF,
-    email: req.body.email
-  })*/
-  console.log("Before findOneAndUpdate");
-  
-  persona.findOne(req.body.email, function (err, personUpdated){
-    if (err) res.status(500).send({message: `Error creating the user: ${err}`});
-   // else{
-     personUpdated.name = req.body.nameF;
-     personUpdated.identifier = req.body.identifierF;
-      console.log(`Estamos en este log ${personUpdated}`);
-      personUpdated.save(function() {
-        res.send("Actualizamos tus datos");
-});
-      
-   // }
+
+  persona.findOne({email : req.body.emailF}, (err, personUpdated) => { //Update by the parameter email. - Should've been done with findOneAndUpdate but couldn't deal with it.  
+    if (err) res.status(500).send({message: `Error updating the user: ${err}`});
+    if(req.body.nameF != undefined) personUpdated.name = req.body.nameF; //IFs to make sure there are data on the body.
+    if(req.body.ageF != undefined) personUpdated.age = req.body.ageF;
+    if(req.body.cellphoneF != undefined) personUpdated.cellphone = req.body.cellphoneF;
+    if(req.body.countryF != undefined) personUpdated.country = req.body.countryF;
+    if(req.body.addressF != undefined) personUpdated.address = req.body.addressF;
+    if(req.body.genderF != undefined) personUpdated.gender = req.body.genderF;
+    if(req.body.identifierF != undefined) personUpdated.identifier = req.body.identifierF;
+    console.log(`El ageF es este ${req.body.ageF}`);
+    console.log(`Estamos en este log ${personUpdated}`);
+    personUpdated.save(function() {
+      res.send("Actualizamos tus datos");
+    });
+  })
+}
+
+function deletePerson(req, res){ //delete for people
+
+  persona.findOneAndRemove({email : req.body.emailF}, (err, personDeleted) => { //Deletes by the parameter email.  
+    if(!err) res.send("Person deleted!");
+    else res.send ("There was a mistake while deleting the register")
+  })
+}
+
+function getAllStudent(req, res) {
+
+  persona.find({identifier: 'student'}, (err, people) => { 
+      res.status(200).send(people)  
   })
 }
 
@@ -57,27 +69,12 @@ function updatePerson(req, res){
 
 
 
-/*function save(req, res) { //POST Person
-  var person = new mod(    person_id: req.body.person_id,  _id: true, autoIndex: true },
-    person_name: String,
-    type_person: String,
-    person_age: Number,
-    person_cellphone: Number,
-    person_address: String,
-    registration: date.now()   
-  {person_id : req.body.person_id, person_name: req.body.person_name, type_person: req.body.type_person});
-  
-    person.save(function() {
-      res.send("Guardamos tus datos");
-    });
-  };
 
-function getAll(req, res){ // función para obtener todos los usuarios
-	User.find(function(err, doc) {
-        res.send(doc);
-  	});
-};
 
+
+
+
+/*
 function getByName(req, res){ // función para obtener un unico usuario apartir del nombre
 	User.findOne({name : req.params.name}, function(err, doc) {
         res.send(doc);
@@ -91,19 +88,12 @@ function remove(req, res) { //función para eliminar un usuario
     } 
   });
 };
-
-function update(req, res) { //función para actualizar un usuario. Actualiza su username
-  User.findOne({name : req.params.name}, function(err, user) {
-        if (err) return handleError(err);
-        user.pass = 'otherUsername';
-        user.save(function() {
-          res.send("Actualizamos tus datos");
-        });
-  	});
-};*/
+*/
 
 module.exports = { // Exporta todos los metodos
   getAllStudent,
   savePerson,
-  updatePerson
+  updatePerson,
+  getAll,
+  deletePerson
 };

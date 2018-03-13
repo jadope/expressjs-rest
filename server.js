@@ -13,9 +13,9 @@ app.use(bodyParser.urlencoded({ extended: false })); //this will let us get the 
 app.use(bodyParser.json());
 
 app.use('/', router); //app.use obtiene el prefijo de URL que desea y el manejador de ruta para él. Esto permite la modularidad en el enrutamiento del lado del servidor.pp.listen(port, function(){
-router.get('/misusuarios', controller.getAllStudent);
-router.post('/registro', controller.savePerson);
-router.put('/perfil', controller.updatePerson); //Actualizo el perfil de 
-app.listen(port)
+router.post('/person/signup', controller.savePerson); //POST Person profile
+router.put('/person/profile', controller.updatePerson); //Update Person profile
+router.get('/person', controller.getAll); //GET all profiles, students, teachers and those who aren't anything
+router.get('/student', controller.getAllStudent); //GET students profiles
+app.listen(port) //Starts the sv.
 console.log('Magic happens inside the door number ' + port);
- //Start the sv.
