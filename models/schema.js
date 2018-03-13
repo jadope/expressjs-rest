@@ -15,7 +15,18 @@ var personSchema = new Schema ({
     country: {type: String, default: ''},
     address: {type: String, default: ''},
     gender: {type: String, enum: ['male','female','undefined'], lowercase:true}, //Needs to be capitalized in the form.
-    identifier: {type: String, lowercase: true} //It'll be student or teacher, otherwise it'll be person.
+    identifier: {type: String, lowercase: true}, //It'll be student or teacher, otherwise it'll be person.
+    //Extra fields for students:
+    semester: {type: Number},
+    numberSubjects: {type: Number},
+    credits: {type: Number},
+    carrer: {type: String},
+    university: {type: String},
+    //Extra fields for teachers:
+    experience: {type: Number},
+    workArea: {type: String},
+    coursesInCharge: {type: Number},
+    dictatesLaboratories: {type: Boolean},
   })
 
   
